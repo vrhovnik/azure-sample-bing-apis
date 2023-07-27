@@ -1,5 +1,4 @@
 using BingSamples.Web.Core;
-using BingSamples.Web.Interfaces;
 using BingSamples.Web.Options;
 using BingSamples.Web.Services;
 
@@ -14,7 +13,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
     options.Conventions.AddPageRoute("/Info/Index", ""));
 
-builder.Services.AddScoped<IBingSearchService, BingSearchService>();
+builder.Services.AddHttpClient<BingSearchService>();
 
 var app = builder.Build();
 

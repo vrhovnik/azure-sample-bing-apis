@@ -1,41 +1,52 @@
 ﻿using BingSamples.Web.Core;
-using BingSamples.Web.Interfaces;
 using BingSamples.Web.Models;
 using BingSamples.Web.Options;
-using Microsoft.Azure.CognitiveServices.Search.WebSearch;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace BingSamples.Web.Services;
 
-public class BingSearchService : IBingSearchService
+public class BingSearchService
 {
+    private readonly HttpClient client;
     private AppOptions appOptions;
-    private readonly WebSearchClient client;
 
-    public BingSearchService(IOptions<AppOptions> optionsValue)
+    public BingSearchService(IOptions<AppOptions> optionsValue, HttpClient client)
     {
+        this.client = client;
         appOptions = optionsValue.Value;
-        client = new WebSearchClient(new ApiKeyServiceClientCredentials(appOptions.SubscriptionKey));
+        client.BaseAddress = new Uri(WebConstants.SearchBaseEndpoint, UriKind.Absolute);
+        client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", appOptions.BingSubscriptionKey);
     }
 
-    public async Task<PaginatedList<SearchModel>> SearchAsync(int page, int pageCount, string query)
+    public async Task<PaginatedList<SearchModel>> SearchAsync(int page, int pageCount, string query,
+        bool doHebrew = false)
     {
-        var searchResponse = await client.Web.SearchAsync(query: query);
+        var currentSearchData = $"search?q={Uri.EscapeDataString(query)}&responseFilter=-videos";
+
+        var searchResponse = await client.GetAsync(currentSearchData);
+
         var list = new List<SearchModel>();
-        if (searchResponse?.WebPages?.Value?.Count > 0)
+
+        if (searchResponse.IsSuccessStatusCode)
         {
-            var pages = searchResponse.WebPages.Value;
-            foreach (var currentWebPage in pages)
+            var contentString = await searchResponse.Content.ReadAsStringAsync();
+            if (!string.IsNullOrEmpty(contentString))
             {
-                list.Add(new SearchModel
+                var webPageResponse = JsonConvert.DeserializeObject<BingResponseObject>(contentString);
+                foreach (var webPageDetail in webPageResponse.WebPagesResult.WebPageslist)
                 {
-                    Title = currentWebPage.Text,
-                    Description = currentWebPage.Description,
-                    UrlOrigin = currentWebPage.WebSearchUrl,
-                    Image = currentWebPage.ThumbnailUrl
-                });
+                    list.Add(new SearchModel
+                    {
+                        Title = webPageDetail.Name,
+                        Description = webPageDetail.Description,
+                        UrlOrigin = webPageDetail.DisplayUrl
+                    });
+                }
             }
         }
+        
+        //todo: translate the description with translator
 
         return PaginatedList<SearchModel>.Create(list, page, pageCount, query);
     }

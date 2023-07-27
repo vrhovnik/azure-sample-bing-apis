@@ -11,29 +11,145 @@
 <p>Form below uses Bing Search API.</p>
 
 <div class="container">
-    <input aria-label="search term"
-           class="form-control"
-           hx-get
-           hx-indicator="#indicator"
-           hx-swap="outerHtml"
-           hx-target="#grid"
-           hx-trigger="keyup changed delay:300ms"
-           id="tbQuery"
-           name="query"
-           placeholder="enter search term"
-           type="text">
+    <form class="row">
+        <div class="col-auto align-content-between">
+            <div class="form-check mr-2">
+                @if (Model.DoHebrew == "on")
+                {
+                    <input checked="checked"
+                           class="form-check-input"
+                           id="cbHebrew"
+                           name="doHebrew"
+                           type="checkbox">
+                }
+                else
+                {
+                    <input checked="checked"
+                           class="form-check-input"
+                           id="cbHebrew"
+                           name="doHebrew"
+                           type="checkbox">
+                }
+                <label class="form-check-label"
+                       for="cbHebrew">
+                    Show results in Hebrew
+                </label>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="input-group mb-3">
+                <input class="form-control"
+                       id="tbQuery"
+                       name="Query"
+                       placeholder="enter search query and press Find me a good result"
+                       type="text"
+                       value="@Model.Query">
+                <button class="btn btn-outline-secondary"
+                        type="submit">
+                    Find me a good result <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <div class="container mt-2">
-    @await Html.PartialAsync("_SearchList", Model.SearchResults)
+    @if (Model.SearchResults.Any())
+    {
+        <div id="grid">
+            <table class="table table-light table-hover"
+                   id="tbData">
+                <caption>
+                    @if (string.IsNullOrEmpty(Model.Query))
+                    {
+                        @:Result list
+                    }
+                    else
+                    {
+                        @:Result list for query <b>@Model.Query</b>
+                    }
+                </caption>
+                @foreach (var searchPageModel in Model.SearchResults)
+                {
+                    <tr>
+                        <td>
+                            @if (string.IsNullOrEmpty(searchPageModel.Image))
+                            {
+                                <img alt="@searchPageModel.Title"
+                                     class="img-thumbnail"
+                                     src="/images/default-image.png">
+                            }
+                            else
+                            {
+                                <img alt="@searchPageModel.Title"
+                                     class="img-thumbnail"
+                                     src="@searchPageModel.Image">
+                            }
+                        </td>
+                        <td>
+                            <a href="@searchPageModel.UrlOrigin"
+                               target="_blank">
+                                @searchPageModel.Title
+                            </a>
+                        </td>
+                        <td class="text-center">@searchPageModel.Description</td>
+                    </tr>
+                }
+            </table>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item @(Model.SearchResults.HasPreviousPage ? "" : "disabled")">
+                        @if (Model.SearchResults.PageIndex - 1 < 1)
+                        {
+                            <a asp-route-pageNumber="1"
+                               asp-route-query="@Model.Query"
+                               class="page-link">
+                                Previous
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-route-pageNumber="@(Model.SearchResults.PageIndex - 1)"
+                               asp-route-query="@Model.Query"
+                               class="page-link">
+                                Previous
+                            </a>
+                        }
+                    </li>
+                    @for (var currentPageIndex = 1; currentPageIndex <= Model.SearchResults.TotalPages; currentPageIndex++)
+                    {
+                        <li class="page-item @(Model.SearchResults.PageIndex == currentPageIndex ? "active" : "")">
+                            <a asp-route-pageNumber="@currentPageIndex"
+                               asp-route-query="@Model.Query"
+                               class="page-link">
+                                @currentPageIndex
+                            </a>
+                        </li>
+                    }
+                    <li class="page-item @(Model.SearchResults.HasNextPage ? "" : "disabled")">
+                        @if (Model.SearchResults.PageIndex + 1 < Model.SearchResults.TotalPages)
+                        {
+                            <a asp-route-pageNumber="@(Model.SearchResults.PageIndex + 1)"
+                               asp-route-query="@Model.Query"
+                               class="page-link">
+                                Next
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-route-pageNumber="@(Model.SearchResults.TotalPages)"
+                               asp-route-query="@Model.Query"
+                               class="page-link">
+                                Next
+                            </a>
+                        }
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+    else
+    {
+        <p>No data present based on selected filter. Check filter @Model.Query and try again.</p>
+    }
 </div>
-
-@section Scripts
-{
-    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
-    <script type="text/javascript">    
-           $(function () {
-               $('[data-toggle="tooltip"]').tooltip()
-           })
-       </script>
-}

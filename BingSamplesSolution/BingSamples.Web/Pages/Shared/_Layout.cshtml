@@ -9,6 +9,8 @@
           rel="stylesheet" />
     <link href="~/css/site.css"
           rel="stylesheet" />
+    <script data-auto-replace-svg="nest"
+            src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
 </head>
 <body>
 <header>
@@ -46,6 +48,10 @@
                     </li>
                 </ul>
             </div>
+            @if (User.Identity is {IsAuthenticated: true })
+            {
+                <span class="font-weight-bolder mr-2">Currently logged in as @User.Identity.Name</span>
+            }
         </div>
     </nav>
 </header>
