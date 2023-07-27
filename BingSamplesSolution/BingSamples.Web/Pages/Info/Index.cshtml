@@ -1,0 +1,28 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h3 class="display-2">Welcome to Bing samples</h3>
+<p>Use below link to check the samples</p>
+<ul>
+    <li>
+        <a asp-area=""
+           asp-page="/Bing/Index">
+            dashboard
+        </a> with examples
+    </li>
+    <li>
+        <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/bing-web-search/"
+           target="_blank">
+            Bing API documentation
+        </a>
+    </li>
+    <li>
+        <a href="https://azure.microsoft.com/pricing/details/cognitive-services/search-api/"
+           target="_blank">
+            pricing details
+        </a>
+    </li>
+</ul>
