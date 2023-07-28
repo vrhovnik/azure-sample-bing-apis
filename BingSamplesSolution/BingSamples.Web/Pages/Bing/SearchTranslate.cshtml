@@ -1,25 +1,24 @@
-﻿@page  "{pageNumber=1}/{query?}"
-@model BingSamples.Web.Pages.Bing.SearchPageModel
+﻿@page
+@model BingSamples.Web.Pages.Bing.SearchTranslatePageModel
 
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "Search Translate";
 }
-
 @section breadcrumb
 {
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a asp-page="/Bing/Index">Dashboard</a>
-        </li>
-
-        <li aria-current="page"
-            class="breadcrumb-item active">
-            Search
-        </li>
-    </ol>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a asp-page="/Bing/Index">Dashboard</a>
+    </li>
+    
+    <li aria-current="page"
+        class="breadcrumb-item active">
+        Search page with translator
+    </li>
+</ol>
 }
 <h2>
-    Search page
+    Search page with using translator
 </h2>
 <p>Form below uses Bing Search API.</p>
 
@@ -35,7 +34,7 @@
                        value="@Model.Query">
                 <button class="btn btn-outline-secondary"
                         type="submit">
-                    Find me a good result <i class="fa-solid fa-magnifying-glass"></i>
+                    Find me a good translated result <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
         </div>

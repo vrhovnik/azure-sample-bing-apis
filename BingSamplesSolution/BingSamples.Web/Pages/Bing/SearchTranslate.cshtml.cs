@@ -8,13 +8,13 @@ using Microsoft.Extensions.Options;
 
 namespace BingSamples.Web.Pages.Bing;
 
-public class SearchPageModel : PageModel
+public class SearchTranslatePageModel : PageModel
 {
-    private readonly ILogger<SearchPageModel> logger;
+    private readonly ILogger<SearchTranslatePageModel> logger;
     private readonly BingSearchService bingSearchService;
     private AppOptions appOptions;
 
-    public SearchPageModel(ILogger<SearchPageModel> logger,
+    public SearchTranslatePageModel(ILogger<SearchTranslatePageModel> logger,
         BingSearchService bingSearchService,
         IOptions<AppOptions> appOptionsValue)
     {
@@ -25,11 +25,11 @@ public class SearchPageModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(int? pageNumber)
     {
-        logger.LogInformation("Loaded page Bing/Search at {DateLoaded}", DateTime.Now);
+        logger.LogInformation("Loaded page Bing/SearchTranslate at {DateLoaded}", DateTime.Now);
         var page = pageNumber ?? 1;
 
         if (!string.IsNullOrEmpty(Query))
-            SearchResults = await bingSearchService.SearchAsync(page, appOptions.PageCount, Query);
+            SearchResults = await bingSearchService.SearchWithTranslationAsync(page, appOptions.PageCount, Query);
 
         logger.LogInformation("Loaded SearchPageModel page with query - {query}", Query);
         return Page();

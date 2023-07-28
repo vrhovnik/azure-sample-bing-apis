@@ -13,6 +13,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
     options.Conventions.AddPageRoute("/Info/Index", ""));
 
+builder.Services.AddHttpClient<BingTranslatorService>();
 builder.Services.AddHttpClient<BingSearchService>();
 
 var app = builder.Build();

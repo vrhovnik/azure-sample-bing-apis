@@ -56,6 +56,14 @@
     </nav>
 </header>
 <div class="container">
+    @if (IsSectionDefined("breadcrumb"))
+    {
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                @await RenderSectionAsync("breadcrumb")
+            </ol>
+        </nav>
+    }
     <main class="pb-3"
           role="main">
         @RenderBody()
