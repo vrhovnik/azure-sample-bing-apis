@@ -20,7 +20,27 @@ public class BingSearchService
         client.BaseAddress = new Uri(WebConstants.SearchBaseEndpoint, UriKind.Absolute);
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", appOptions.BingSubscriptionKey);
     }
+    
+    public async Task<PaginatedList<T>> SearchAsync<T>(int page, int pageCount, string virtualPath,string query,
+        Func<string,List<T>> func)
+    {
+        var currentSearchData = $"{virtualPath}?q={Uri.EscapeDataString(query)}";
 
+        var searchResponse = await client.GetAsync(currentSearchData);
+
+        var list = new List<T>();
+
+        if (!searchResponse.IsSuccessStatusCode) return PaginatedList<T>.Create(list, page, pageCount, query);
+
+        var contentString = await searchResponse.Content.ReadAsStringAsync();
+
+        if (string.IsNullOrEmpty(contentString)) return PaginatedList<T>.Create(list, page, pageCount, query);
+        
+        list = func(contentString);
+        
+        return PaginatedList<T>.Create(list, page, pageCount, query);
+    }
+    
     public async Task<PaginatedList<SearchModel>> SearchAsync(int page, int pageCount, string query)
     {
         var currentSearchData = $"search?q={Uri.EscapeDataString(query)}";
