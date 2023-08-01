@@ -10,13 +10,12 @@ namespace BingSamples.Web.Services;
 public class BingTranslatorService
 {
     private readonly HttpClient client;
-    private AppOptions appOptions;
 
     public BingTranslatorService(IOptions<AppOptions> appOptionsValue, HttpClient client)
     {
         this.client = client;
         client.BaseAddress = new Uri(WebConstants.TranslatorBaseEndpoint, UriKind.Absolute);
-        appOptions = appOptionsValue.Value;
+        var appOptions = appOptionsValue.Value;
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", appOptions.TranslatorSubscriptionKey);
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", appOptions.TranslatorRegion);
     }

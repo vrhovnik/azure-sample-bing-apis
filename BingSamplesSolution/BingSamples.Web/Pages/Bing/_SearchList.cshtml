@@ -18,9 +18,18 @@
             {
                 <tr>
                     <td>
-                        <img alt="@searchPageModel.Title"
-                             class="img-thumbnail"
-                             src="@searchPageModel.Image">
+                        @if (string.IsNullOrEmpty(searchPageModel.Image))
+                        {
+                            <img alt="@searchPageModel.Title"
+                                 class="img-thumbnail"
+                                 src="~/images/default-image.png">
+                        }
+                        else
+                        {
+                            <img alt="@searchPageModel.Title"
+                                 class="img-thumbnail"
+                                 src="@searchPageModel.Image">
+                        }
                     </td>
                     <td>
                         <a href="@searchPageModel.UrlOrigin"

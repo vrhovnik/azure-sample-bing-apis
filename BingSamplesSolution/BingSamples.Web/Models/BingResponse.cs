@@ -6,7 +6,7 @@ public class BingResponseObject
 {
     public string _type { get; set; }
     [JsonProperty("queryContext")]
-    public QueryContext QueryContext { get; set; }
+    public SearchQueryContext QueryContext { get; set; }
     [JsonProperty("webPages")]
     public WebPages WebPagesResult { get; set; }
     [JsonProperty("images")]
@@ -19,7 +19,7 @@ public class BingResponseObject
     public RankingResponse RankingResponse { get; set; }
 }
 
-public class QueryContext
+public class SearchQueryContext
 {
     public string originalQuery { get; set; }
 }

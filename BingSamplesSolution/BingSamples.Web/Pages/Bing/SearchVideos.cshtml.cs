@@ -8,33 +8,34 @@ using Microsoft.Extensions.Options;
 
 namespace BingSamples.Web.Pages.Bing;
 
-public class SearchPageModel : PageModel
+public class SearchVideosPageModel : PageModel
 {
-    private readonly ILogger<SearchPageModel> logger;
+    private readonly ILogger<SearchVideosPageModel> logger;
     private readonly BingSearchService bingSearchService;
-    private AppOptions appOptions;
+    private readonly AppOptions appOptions;
 
-    public SearchPageModel(ILogger<SearchPageModel> logger,
+    public SearchVideosPageModel(ILogger<SearchVideosPageModel> logger,
         BingSearchService bingSearchService,
         IOptions<AppOptions> appOptionsValue)
     {
         this.logger = logger;
+        this.bingSearchService = bingSearchService;
         appOptions = appOptionsValue.Value;
         this.bingSearchService = bingSearchService;
     }
 
     public async Task<IActionResult> OnGetAsync(int? pageNumber)
     {
-        logger.LogInformation("Loaded page Bing/Search at {DateLoaded}", DateTime.Now);
+        logger.LogInformation("Loading Bing Search videos at {DateLoaded}", DateTime.Now);
         var page = pageNumber ?? 1;
 
         if (!string.IsNullOrEmpty(Query))
-            SearchResults = await bingSearchService.SearchAsync(page, appOptions.PageCount, Query);
+            SearchResults = await bingSearchService.SearchVideosAsync(page, appOptions.PageCount, Query);
 
-        logger.LogInformation("Loaded SearchPageModel page with query - {SearchQuery}", Query);
-        return Page();
+        logger.LogInformation("Loaded SearchVideosPageModel page with query - {CurrentImageQuery}", Query);
+        return Page();    
     }
-
+    
     [BindProperty(SupportsGet = true)] public string Query { get; set; }
-    [BindProperty] public PaginatedList<SearchModel> SearchResults { get; set; } = new();
+    [BindProperty] public PaginatedList<SearchVideosModel> SearchResults { get; set; } = new();
 }

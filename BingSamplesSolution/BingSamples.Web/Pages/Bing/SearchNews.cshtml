@@ -1,0 +1,68 @@
+﻿@page
+@model BingSamples.Web.Pages.Bing.SearchNewsPageModel
+
+@{
+    ViewData["Title"] = "Search News";
+}
+
+@section breadcrumb
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-page="/Bing/Index">Dashboard</a>
+        </li>
+
+        <li aria-current="page"
+            class="breadcrumb-item active">
+            Search news
+        </li>
+    </ol>
+}
+
+<h2>
+    Search page for news
+</h2>
+<p>Form below uses Bing Search API to search news.</p>
+
+<div class="container">
+    <form class="row">
+        <div class="col-8">
+            <div class="input-group mb-3">
+                <input class="form-control"
+                       id="tbQuery"
+                       name="Query"
+                       placeholder="enter search query and press Find me a good result"
+                       type="text"
+                       value="@Model.Query">
+                <button class="btn btn-outline-secondary"
+                        type="submit">
+                    Find me a good result <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container mt-2">
+    @if (Model.SearchResults.Any())
+    {
+        <div class="row">
+            @foreach (var modelSearchResult in Model.SearchResults)
+            {
+                <div class="col-3 mb-2">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@modelSearchResult.Title</h5>
+                            <p class="card-text">@modelSearchResult.Description</p>
+                            <a href="@modelSearchResult.Url" class="card-link">Check original </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>There is no data shown. Change query <b>@Model.Query</b> and try again!</p>
+    }
+</div>
