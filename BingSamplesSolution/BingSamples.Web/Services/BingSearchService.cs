@@ -149,6 +149,34 @@ public class BingSearchService
         return PaginatedList<SearchNewsModel>.Create(list, page, pageCount, query);
     }
 
+    public async Task<PaginatedList<SearchSuggestionModel>> SearchSuggestionsAsync(int page, int pageCount,
+        string query)
+    {
+        var currentSearchData = $"{WebConstants.SearchSuggestionsVirtual}?Query={Uri.EscapeDataString(query)}";
+
+        var searchResponse = await client.GetAsync(currentSearchData);
+        var list = new List<SearchSuggestionModel>();
+
+        if (!searchResponse.IsSuccessStatusCode)
+            return PaginatedList<SearchSuggestionModel>.Create(list, page, pageCount, query);
+
+        var contentString = await searchResponse.Content.ReadAsStringAsync();
+
+        if (string.IsNullOrEmpty(contentString))
+            return PaginatedList<SearchSuggestionModel>.Create(list, page, pageCount, query);
+
+        var webPageResponse = JsonConvert.DeserializeObject<BingSuggestionResponse>(contentString);
+        list.AddRange(collection: webPageResponse.SuggestionGroups.Select(webPageDetail =>
+            new SearchSuggestionModel
+            {
+                Title = webPageDetail.Name,
+                Details = webPageDetail.SearchSuggestions.Select(display =>
+                    new SearchSuggestionDetail(display.DisplayText, display.Url)).ToList()
+            }));
+
+        return PaginatedList<SearchSuggestionModel>.Create(list, page, pageCount, query);
+    }
+
     public async Task<PaginatedList<SearchModel>> SearchWithTranslationAsync(int page, int pageCount, string query)
     {
         var results = await SearchAsync(page, pageCount, query);

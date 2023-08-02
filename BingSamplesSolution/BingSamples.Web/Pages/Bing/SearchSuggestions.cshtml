@@ -1,0 +1,74 @@
+﻿@page  "{pageNumber=1}/{query?}"
+@model BingSamples.Web.Pages.Bing.SearchSuggestionsPageModel
+
+@{
+    ViewData["Title"] = "Search suggestions";
+}
+
+@section breadcrumb
+{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-page="/Bing/Index">Dashboard</a>
+        </li>
+
+        <li aria-current="page"
+            class="breadcrumb-item active">
+            Search
+        </li>
+    </ol>
+}
+
+<h2>
+    Search page
+</h2>
+<p>Form below uses Bing Search API.</p>
+
+<div class="container">
+    <form class="row">
+        <div class="col-8">
+            <div class="input-group mb-3">
+                <input class="form-control"
+                       id="tbQuery"
+                       name="Query"
+                       placeholder="enter search query and press Find me a good result"
+                       type="text"
+                       value="@Model.Query">
+                <button class="btn btn-outline-secondary"
+                        type="submit">
+                    Find me a good result <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+@if (Model.SearchResults.Any())
+{
+    <div class="container mt-2">
+        <table class="table table-light table-hover"
+               id="tbData">
+            @foreach (var searchPageModel in Model.SearchResults)
+            {
+                <tr>
+                    <td>
+                        @searchPageModel.Title
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var (name, url) in searchPageModel.Details)
+                            {
+                                <li>
+                                    <a href="@url">@name</a>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <p>There is no data, check query.</p>
+}

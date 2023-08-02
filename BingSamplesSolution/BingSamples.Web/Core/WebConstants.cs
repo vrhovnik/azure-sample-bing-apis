@@ -8,5 +8,6 @@ public static class WebConstants
     public const string SearchImagesVirtual = "images/search";
     public const string SearchVideosVirtual = "videos/search";
     public const string SearchNewsVirtual = "news/search";
+    public const string SearchSuggestionsVirtual = "Suggestions";
     public const string TranslatorBaseEndpoint = "https://api.cognitive.microsofttranslator.com/";
 }

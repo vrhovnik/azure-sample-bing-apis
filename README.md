@@ -13,7 +13,7 @@ In this repository we will demonstrate the usage with having a simple web applic
 4. [Bing News Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-news-search/overview)
 5. [Bing Video Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-video-search/overview)
 6. [Bing Visual Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/overview)
-7. [Bing Autosuggest API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-autosuggest/overview)
+7. [Bing Autosuggest API](https://learn.microsoft.com/en-us/azure/cognitive-services/bing-autosuggest/get-suggested-search-terms)
 8. [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview)
 
 It will integrate the API inside the app to demonstrate the usage in the app itself.
