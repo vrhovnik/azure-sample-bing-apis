@@ -51,7 +51,14 @@
             {
                 <div class="col-3 mb-2">
                     <div class="card">
-                        <img src="@modelSearchResult.ThumbnailUrl" class="card-img-top" alt="@modelSearchResult.Description">
+                        @if (string.IsNullOrEmpty(modelSearchResult.ThumbnailUrl))
+                        {
+                            <img src="images/default-image.png" class="card-img-top" alt="@modelSearchResult.Description">
+                        }
+                        else
+                        {
+                            <img src="@modelSearchResult.ThumbnailUrl" class="card-img-top" alt="@modelSearchResult.Description">
+                        }
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-body-secondary">@modelSearchResult.Author</h6>
                             <p class="card-text">@modelSearchResult.Description</p>

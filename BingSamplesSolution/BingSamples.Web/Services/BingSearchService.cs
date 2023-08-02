@@ -20,9 +20,9 @@ public class BingSearchService
         client.BaseAddress = new Uri(WebConstants.SearchBaseEndpoint, UriKind.Absolute);
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", appOptions.BingSubscriptionKey);
     }
-    
-    public async Task<PaginatedList<T>> SearchAsync<T>(int page, int pageCount, string virtualPath,string query,
-        Func<string,List<T>> func)
+
+    public async Task<PaginatedList<T>> SearchAsync<T>(int page, int pageCount, string virtualPath, string query,
+        Func<string, List<T>> func)
     {
         var currentSearchData = $"{virtualPath}?q={Uri.EscapeDataString(query)}";
 
@@ -35,12 +35,12 @@ public class BingSearchService
         var contentString = await searchResponse.Content.ReadAsStringAsync();
 
         if (string.IsNullOrEmpty(contentString)) return PaginatedList<T>.Create(list, page, pageCount, query);
-        
+
         list = func(contentString);
-        
+
         return PaginatedList<T>.Create(list, page, pageCount, query);
     }
-    
+
     public async Task<PaginatedList<SearchModel>> SearchAsync(int page, int pageCount, string query)
     {
         var currentSearchData = $"search?q={Uri.EscapeDataString(query)}";
@@ -87,7 +87,7 @@ public class BingSearchService
             new SearchImageModel
             {
                 ImageUrl = webPageDetail.ContentUrl,
-                AltText = webPageDetail.Name.Truncate()
+                AltText = webPageDetail.Name.Truncate(30)
             }));
 
         return PaginatedList<SearchImageModel>.Create(list, page, pageCount, query);
@@ -112,11 +112,11 @@ public class BingSearchService
         list.AddRange(webPageResponse.BingVideoResults.Select(webPageDetail =>
             new SearchVideosModel
             {
-                Author = webPageDetail.Creator.Name,
+                Author = webPageDetail.Creator?.Name,
                 Description = webPageDetail.Description.Truncate(),
-                ThumbnailUrl = webPageDetail.ThumbnailUrl,
+                ThumbnailUrl = webPageDetail.ThumbnailUrl ?? string.Empty,
                 Url = webPageDetail.ContentUrl,
-                DatePublished = webPageDetail.DatePublished
+                DatePublished = webPageDetail.DatePublished ?? string.Empty
             }));
 
         return PaginatedList<SearchVideosModel>.Create(list, page, pageCount, query);
