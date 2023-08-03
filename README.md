@@ -110,3 +110,4 @@ After install, open postman:
 
 1. [Bing Search API overview](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-web-search/overview)
 2. [Bing Search API pricing](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/search-api/)
+3. [Bing usage and guidelines](https://learn.microsoft.com/en-us/azure/cognitive-services/bing-web-search/use-display-requirements)
