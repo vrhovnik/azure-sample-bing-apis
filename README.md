@@ -7,14 +7,14 @@ integrate cognitive searches into your applications and services.
 
 In this repository we will demonstrate the usage with having a simple web application that will use the Bing Search API:
 
-1. [Bing Web Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-web-search/overview)
-2. [Bing Image Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-image-search/overview)
-3. [Bing Entity Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-entities-search/overview)
-4. [Bing News Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-news-search/overview)
-5. [Bing Video Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-video-search/overview)
-6. [Bing Visual Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/overview)
+1. [Bing Web Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-web-search/overview) - demos page [here](https://www.microsoft.com/en-us/bing/apis/bing-web-search-api)
+2. [Bing Image Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-image-search/overview) - demos page [here](https://www.microsoft.com/en-us/bing/apis/bing-image-search-api)
+3. [Bing Entity Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-entities-search/overview) - demos page [here](https://www.microsoft.com/en-us/bing/apis/bing-entity-search-api)
+4. [Bing News Search API](https://learn.microsoft.com/en-us/azure/cognitive-services/bing-news-search/concepts/search-for-news) - demos page [here](https://www.microsoft.com/en-us/bing/apis/bing-news-search-api)
+5. [Bing Video Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-video-search/overview) - demos page [here](https://www.microsoft.com/en-us/bing/apis/bing-video-search-api)
+6. [Bing Visual Search API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/overview) - demos page [here](https://www.microsoft.com/en-us/bing/apis/bing-visual-search-api)
 7. [Bing Autosuggest API](https://learn.microsoft.com/en-us/azure/cognitive-services/bing-autosuggest/get-suggested-search-terms)
-8. [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview)
+8. [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview) - demos page [here](https://www.microsoft.com/en-us/bing/apis/bing-spell-check-api)
 
 It will integrate the API inside the app to demonstrate the usage in the app itself.
 
@@ -41,7 +41,8 @@ If you will be working on your local machines, you will need to have:
    example [Visual Studio Code](https://code.visualstudio.com) or [NeoVim](https://neovim.io/)
    or [Visual Studio](https://visualstudio.microsoft.com/) or [Jetbrains Rider](https://www.jetbrains.com/rider/))
 
-To control settings, we recommend to use [environment variables](https://12factor.net/config). The easiest way to set them is via PowerShell and
+To control settings, we recommend to use [environment variables](https://12factor.net/config). The easiest way to set
+them is via PowerShell and
 his [provider](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_providers?view=powershell-7.3)
 option.
 
@@ -90,6 +91,20 @@ dotnet run
 Open the browser on URL presented to you on the screen and you should see the application running.
 
 ![App is running on localhost](https://webeudatastorage.blob.core.windows.net/web/bing-api-samples-localhost.png)
+
+## Run it in postman
+
+If you want to explore REST api calls, I have added [postman collection](Extras/Bing%20APIs.postman_collection.json). To
+run it, you will need to install client side tool [Postman](https://www.postman.com/downloads/).
+
+After install, open postman:
+1. use Import option from File menu (File -- Import or press CTRL+O)
+2. select files and save it in collection.
+3. Change the key and update Authorization tab, which you get from Azure portal (when you create resource)
+
+![Bing authorization information](https://webeudatastorage.blob.core.windows.net/web/Bing-Apis-Key-Postman.png)
+
+4. test out the api's
 
 ## Links and additional information
 

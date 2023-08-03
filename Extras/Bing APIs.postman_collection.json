@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "24af4cb3-bd73-4779-b6e9-f0a79808122e",
+		"name": "Bing APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "498671"
+	},
+	"item": [
+		{
+			"name": "Bing Search API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{searchbaseurl}}/search?q=israel+beer+site:geardiary.com",
+					"host": [
+						"{{searchbaseurl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "israel+beer+site:geardiary.com"
+						},
+						{
+							"key": "responseFilter",
+							"value": "-news",
+							"disabled": true
+						},
+						{
+							"key": "mkt",
+							"value": "en-US",
+							"disabled": true
+						},
+						{
+							"key": "answerCount",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "count",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "setLang",
+							"value": "he",
+							"disabled": true
+						},
+						{
+							"key": "q",
+							"value": "israel beer next to Microsoft building in Tel Aviv",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{searchbaseurl}}/images/search?q=israel",
+					"host": [
+						"{{searchbaseurl}}"
+					],
+					"path": [
+						"images",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "israel"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bing Videos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{searchbaseurl}}/videos/search?q=israel",
+					"host": [
+						"{{searchbaseurl}}"
+					],
+					"path": [
+						"videos",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "israel"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bing News",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{searchbaseurl}}/news/search?q=israel&setLang=sl-SI",
+					"host": [
+						"{{searchbaseurl}}"
+					],
+					"path": [
+						"news",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "israel"
+						},
+						{
+							"key": "setLang",
+							"value": "sl-SI"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bing Suggestions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{searchbaseurl}}/Suggestions?q=israel",
+					"host": [
+						"{{searchbaseurl}}"
+					],
+					"path": [
+						"Suggestions"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "israel"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bing Spellcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{searchbaseurl}}/spellcheck?text=Azure rulz and it is beatuffil",
+					"host": [
+						"{{searchbaseurl}}"
+					],
+					"path": [
+						"spellcheck"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "Azure rulz and it is beatuffil"
+						},
+						{
+							"key": "mode",
+							"value": "spell",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "Ocp-Apim-Subscription-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "GET KEY FROM AZURE PORTAL",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "searchbaseurl",
+			"value": "https://api.bing.microsoft.com/v7.0",
+			"type": "string"
+		}
+	]
+}
